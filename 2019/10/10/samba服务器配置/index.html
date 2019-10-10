@@ -55,29 +55,33 @@
   };
 </script>
 
-  <meta name="keywords" content="Linux, vimer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="强大人的小屋">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="在多用户的使用场景下，为了统一为各个用户配置samba目录，可以将用户的home目录统一配置成samba目录，下面以在ubuntu上配置为例进行说明。1.先要安装Samba1sudo apt-get install samba openssh-server2.编译Samba配置文件">
+<meta name="keywords" content="Linux, vimer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 下 Samba 服务器配置samb目录为用户的home目录">
+<meta property="og:url" content="http://yoursite.com/2019/10/10/samba服务器配置/index.html">
 <meta property="og:site_name" content="强大人的小屋">
+<meta property="og:description" content="在多用户的使用场景下，为了统一为各个用户配置samba目录，可以将用户的home目录统一配置成samba目录，下面以在ubuntu上配置为例进行说明。1.先要安装Samba1sudo apt-get install samba openssh-server2.编译Samba配置文件">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-10T05:51:24.389Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="强大人的小屋">
-  <link rel="canonical" href="http://yoursite.com/">
+<meta name="twitter:title" content="Linux 下 Samba 服务器配置samb目录为用户的home目录">
+<meta name="twitter:description" content="在多用户的使用场景下，为了统一为各个用户配置samba目录，可以将用户的home目录统一配置成samba目录，下面以在ubuntu上配置为例进行说明。1.先要安装Samba1sudo apt-get install samba openssh-server2.编译Samba配置文件">
+  <link rel="canonical" href="http://yoursite.com/2019/10/10/samba服务器配置/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false,
+    isHome: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>强大人的小屋</title>
+  <title>Linux 下 Samba 服务器配置samb目录为用户的home目录 | 强大人的小屋</title>
   
 
 
@@ -273,10 +277,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/samba服务器配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -289,9 +293,8 @@
       <meta itemprop="name" content="强大人的小屋">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/10/samba服务器配置/" class="post-title-link" itemprop="url">Linux 下 Samba 服务器配置samb目录为用户的home目录</a>
+        <h1 class="post-title" itemprop="name headline">Linux 下 Samba 服务器配置samb目录为用户的home目录
+
           
         </h1>
 
@@ -325,120 +328,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在多用户的使用场景下，为了统一为各个用户配置samba目录，可以将用户的home目录统一配置成samba目录，<br>下面以在ubuntu上配置为例进行说明。</p><h2 id="1-先要安装Samba"><a href="#1-先要安装Samba" class="headerlink" title="1.先要安装Samba"></a>1.先要安装Samba</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba openssh-server</span><br></pre></td></tr></table></figure><h2 id="2-编译Samba配置文件"><a href="#2-编译Samba配置文件" class="headerlink" title="2.编译Samba配置文件"></a>2.编译Samba配置文件</h2>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/10/10/samba服务器配置/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
+        <p>在多用户的使用场景下，为了统一为各个用户配置samba目录，可以将用户的home目录统一配置成samba目录，<br>下面以在ubuntu上配置为例进行说明。</p><h2 id="1-先要安装Samba"><a href="#1-先要安装Samba" class="headerlink" title="1.先要安装Samba"></a>1.先要安装Samba</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba openssh-server</span><br></pre></td></tr></table></figure><h2 id="2-编译Samba配置文件"><a href="#2-编译Samba配置文件" class="headerlink" title="2.编译Samba配置文件"></a>2.编译Samba配置文件</h2><a id="more"></a>
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/samba/smb.conf</span><br></pre></td></tr></table></figure>
+
+<p>找到[homes]项，此项默认是注释掉的，取消其注释，然后修改其具体内容，修改成如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[homes]</span><br><span class="line">   comment = Home Directories</span><br><span class="line">   browseable = yes</span><br><span class="line"><span class="comment"># By default, the home directories are exported read-only. Change the</span></span><br><span class="line"><span class="comment"># next parameter to 'no' if you want to be able to write to them.</span></span><br><span class="line">   <span class="built_in">read</span> only = no</span><br><span class="line"><span class="comment"># File creation mask is set to 0700 for security reasons. If you want to</span></span><br><span class="line"><span class="comment"># create files with group=rw permissions, set next parameter to 0775.</span></span><br><span class="line">   create mask = 0755 <span class="comment">#建议将权限修改成0755，这样其它用户只是不能修改</span></span><br><span class="line"><span class="comment"># Directory creation mask is set to 0700 for security reasons. If you want to</span></span><br><span class="line"><span class="comment"># create dirs. with group=rw permissions, set next parameter to 0775.</span></span><br><span class="line">   directory mask = 0755</span><br><span class="line"><span class="comment"># By default, \\server\username shares can be connected to by anyone</span></span><br><span class="line"><span class="comment"># with access to the samba server. Un-comment the following parameter</span></span><br><span class="line"><span class="comment"># to make sure that only "username" can connect to \\server\username</span></span><br><span class="line"><span class="comment"># The following parameter makes sure that only "username" can connect</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This might need tweaking when using external authentication schemes</span></span><br><span class="line">   valid users = %S <span class="comment">#本行需要取消注释</span></span><br></pre></td></tr></table></figure>
+
+<p>如上修改完成后wq保存退出！</p>
+<h2 id="3-重启samba服务："><a href="#3-重启samba服务：" class="headerlink" title="3. 重启samba服务："></a>3. 重启samba服务：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service smbd restart</span><br><span class="line">sudo service nmbd restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-增加一个现有用户的对应samba帐号："><a href="#4-增加一个现有用户的对应samba帐号：" class="headerlink" title="4. 增加一个现有用户的对应samba帐号："></a>4. 增加一个现有用户的对应samba帐号：</h2><p>如我已经有一个用户叫dante，现在给dante开通samba帐号(必须设置)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo smbpasswd -a dante</span><br></pre></td></tr></table></figure>
+
+<p>根据提示输入两次密码即可。</p>
+<h2 id="5-现在可以测试了，在Window下按win-r，输入samba地址尝试登录："><a href="#5-现在可以测试了，在Window下按win-r，输入samba地址尝试登录：" class="headerlink" title="5.现在可以测试了，在Window下按win+r，输入samba地址尝试登录："></a>5.现在可以测试了，在Window下按win+r，输入samba地址尝试登录：</h2><p>\10.0.0.2\dante</p>
+<h2 id="6-此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！"><a href="#6-此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！" class="headerlink" title="6.此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！"></a>6.此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！</h2>
     </div>
 
     
     
     
-      <footer class="post-footer">
-          <div class="post-eof"></div>
         
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/09/github+hexo搭建个人博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强大人">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="强大人的小屋">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/09/github+hexo搭建个人博客/" class="post-title-link" itemprop="url">使用Github和hexo轻松搭建个人博客</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-09 15:56:53 / 修改时间：16:34:40" itemprop="dateCreated datePublished" datetime="2019-10-09T15:56:53+08:00">2019-10-09</time>
-            </span>
-          
-            
-
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <p>Github的pages可以方便的搭建个人博客，再结合hexo静态博客框架，可以方便的构建自己的博客系统。</p><h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><ul>
-<li>git</li>
-<li>hexo</li>
-<li>node.js</li>
-</ul><h2 id="Github-创建仓库"><a href="#Github-创建仓库" class="headerlink" title="Github 创建仓库"></a>Github 创建仓库</h2><p>创建仓库的名字必须使用 github昵称.githug.io 的格式，如 lordqiang.github.io</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/10/09/github+hexo搭建个人博客/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/09/github+hexo搭建个人博客/" rel="next" title="使用Github和hexo轻松搭建个人博客">
+                  <i class="fa fa-chevron-left"></i> 使用Github和hexo轻松搭建个人博客
+                </a>
+              
             </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
         
       </footer>
+    
   </article>
   
   
   
 
-    
   </div>
-
-  
-
 
 
           </div>
@@ -455,6 +397,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -467,6 +414,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-先要安装Samba"><span class="nav-number">1.</span> <span class="nav-text">1.先要安装Samba</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-编译Samba配置文件"><span class="nav-number">2.</span> <span class="nav-text">2.编译Samba配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-重启samba服务："><span class="nav-number">3.</span> <span class="nav-text">3. 重启samba服务：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-增加一个现有用户的对应samba帐号："><span class="nav-number">4.</span> <span class="nav-text">4. 增加一个现有用户的对应samba帐号：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-现在可以测试了，在Window下按win-r，输入samba地址尝试登录："><span class="nav-number">5.</span> <span class="nav-text">5.现在可以测试了，在Window下按win+r，输入samba地址尝试登录：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！"><span class="nav-number">6.</span> <span class="nav-text">6.此时windows应该会弹出窗口要求输入用户名和密码了，输入吧。Enjoy！</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
